@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="https://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.css" />
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet-heat.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/OSMBuildings-Leaflet.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="https://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="data/Callestranquilas0.js"></script>
+        <script src="data/Viasciclistas1.js"></script>
+        <script src="data/Ciclocarriles2.js"></script>
+        <script src="data/Semaforobici3.js"></script>
+        <script src="data/Avanzabici4.js"></script>
+        <script src="data/Aparcabicis5.js"></script>
+        <script src="data/Areasdedescanso6.js"></script>
+        <script src="data/BasesBicimad7.js"></script>
+        <script>
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[40.3888236897,-3.7482101597],[40.4435439644,-3.62619311628]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        L.control.locate().addTo(map);
+        var feature_group = new L.featureGroup([]);
+        var bounds_group = new L.featureGroup([]);
+        var raster_group = new L.LayerGroup([]);
+        var basemap0 = L.tileLayer('http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png', {
+            attribution: 'Map Tiles: &copy; <a href="https://thunderforest.com/">Thunderforest</a>, Map Data: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Data: <a href="http://datos.madrid.es/">Madrid OpenData</a> vía: <a href="https://github.com/datourbano/">DatoUrbano</a>' ,
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        var basemap1 = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://carto.com/">Carto</a>,&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Data: <a href="http://datos.madrid.es/">Madrid OpenData</a> vía: <a href="https://github.com/datourbano/">DatoUrbano</a>' ,
+            maxZoom: 28
+        });
+        basemap1.addTo(map);
+        var basemap2 = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://carto.com/">Carto</a>,&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Data: <a href="http://datos.madrid.es/">Madrid OpenData</a> vía: <a href="https://github.com/datourbano/">DatoUrbano</a>' ,
+            maxZoom: 28
+        });
+        basemap2.addTo(map);
+        function setBounds() {
+        }
+        function geoJson2heat(geojson, weight) {
+          return geojson.features.map(function(feature) {
+            return [
+              feature.geometry.coordinates[1],
+              feature.geometry.coordinates[0],
+              feature.properties[weight]
+            ];
+          });
+        }
+        function pop_Callestranquilas0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">TX_CAPA</th>\
+                        <td>' + (feature.properties['TX_CAPA'] !== null ? Autolinker.link(String(feature.properties['TX_CAPA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NU_DIRECCI</th>\
+                        <td>' + (feature.properties['NU_DIRECCI'] !== null ? Autolinker.link(String(feature.properties['NU_DIRECCI'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NU_DOBLE_S</th>\
+                        <td>' + (feature.properties['NU_DOBLE_S'] !== null ? Autolinker.link(String(feature.properties['NU_DOBLE_S'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TX_NOMBRE</th>\
+                        <td>' + (feature.properties['TX_NOMBRE'] !== null ? Autolinker.link(String(feature.properties['TX_NOMBRE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Shape_Leng</th>\
+                        <td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_Callestranquilas0(feature) {
+            switch(feature.properties['TX_CAPA']) {
+                case 'CICLOCALLES':
+                    return {
+                pane: 'pane_Callestranquilas0',
+                opacity: 1,
+                color: 'rgba(193,134,238,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+            }
+                    break;
+                case 'PEATONAL':
+                    return {
+                pane: 'pane_Callestranquilas0',
+                opacity: 1,
+                color: 'rgba(208,161,99,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Callestranquilas0');
+        map.getPane('pane_Callestranquilas0').style.zIndex = 600;
+        map.getPane('pane_Callestranquilas0').style['mix-blend-mode'] = 'normal';
+    var layer_Callestranquilas0 = new L.geoJson(json_Callestranquilas0, {
+        pane: 'pane_Callestranquilas0',
+        onEachFeature: pop_Callestranquilas0,
+        style: style_Callestranquilas0
+    });
+        bounds_group.addLayer(layer_Callestranquilas0);
+        feature_group.addLayer(layer_Callestranquilas0);
+        function pop_Viasciclistas1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ID_VIA</th>\
+                        <td>' + (feature.properties['ID_VIA'] !== null ? Autolinker.link(String(feature.properties['ID_VIA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMBRE_VIA</th>\
+                        <td>' + (feature.properties['NOMBRE_VIA'] !== null ? Autolinker.link(String(feature.properties['NOMBRE_VIA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ID_ESTADO</th>\
+                        <td>' + (feature.properties['ID_ESTADO'] !== null ? Autolinker.link(String(feature.properties['ID_ESTADO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ID</th>\
+                        <td>' + (feature.properties['ID'] !== null ? Autolinker.link(String(feature.properties['ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FUNCIONARI</th>\
+                        <td>' + (feature.properties['FUNCIONARI'] !== null ? Autolinker.link(String(feature.properties['FUNCIONARI'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ID_ACTUACI</th>\
+                        <td>' + (feature.properties['ID_ACTUACI'] !== null ? Autolinker.link(String(feature.properties['ID_ACTUACI'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMBRE_ORI</th>\
+                        <td>' + (feature.properties['NOMBRE_ORI'] !== null ? Autolinker.link(String(feature.properties['NOMBRE_ORI'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">OBSERVACIO</th>\
+                        <td>' + (feature.properties['OBSERVACIO'] !== null ? Autolinker.link(String(feature.properties['OBSERVACIO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LONGITUD</th>\
+                        <td>' + (feature.properties['LONGITUD'] !== null ? Autolinker.link(String(feature.properties['LONGITUD'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">INICIO</th>\
+                        <td>' + (feature.properties['INICIO'] !== null ? Autolinker.link(String(feature.properties['INICIO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FIN</th>\
+                        <td>' + (feature.properties['FIN'] !== null ? Autolinker.link(String(feature.properties['FIN'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BASE_URL</th>\
+                        <td>' + (feature.properties['BASE_URL'] !== null ? Autolinker.link(String(feature.properties['BASE_URL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">EXT_URL</th>\
+                        <td>' + (feature.properties['EXT_URL'] !== null ? Autolinker.link(String(feature.properties['EXT_URL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOTAS</th>\
+                        <td>' + (feature.properties['NOTAS'] !== null ? Autolinker.link(String(feature.properties['NOTAS'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SHAPE_LENG</th>\
+                        <td>' + (feature.properties['SHAPE_LENG'] !== null ? Autolinker.link(String(feature.properties['SHAPE_LENG'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">COLOR</th>\
+                        <td>' + (feature.properties['COLOR'] !== null ? Autolinker.link(String(feature.properties['COLOR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">EXT_URL2</th>\
+                        <td>' + (feature.properties['EXT_URL2'] !== null ? Autolinker.link(String(feature.properties['EXT_URL2'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_Viasciclistas1(feature) {
+            switch(feature.properties['COLOR']) {
+                case '1':
+                    return {
+                pane: 'pane_Viasciclistas1',
+                opacity: 1,
+                color: 'rgba(255,1,1,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_Viasciclistas1',
+                opacity: 1,
+                color: 'rgba(122,190,93,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_Viasciclistas1',
+                opacity: 1,
+                color: 'rgba(154,150,196,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+            }
+                    break;
+                case '4':
+                    return {
+                pane: 'pane_Viasciclistas1',
+                opacity: 1,
+                color: 'rgba(0,236,15,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+            }
+                    break;
+                case '5':
+                    return {
+                pane: 'pane_Viasciclistas1',
+                opacity: 1,
+                color: 'rgba(255,197,5,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+            }
+                    break;
+                case '10':
+                    return {
+                pane: 'pane_Viasciclistas1',
+                opacity: 1,
+                color: 'rgba(208,158,214,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+            }
+                    break;
+                case '15':
+                    return {
+                pane: 'pane_Viasciclistas1',
+                opacity: 1,
+                color: 'rgba(216,96,239,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Viasciclistas1');
+        map.getPane('pane_Viasciclistas1').style.zIndex = 601;
+        map.getPane('pane_Viasciclistas1').style['mix-blend-mode'] = 'normal';
+    var layer_Viasciclistas1 = new L.geoJson(json_Viasciclistas1, {
+        pane: 'pane_Viasciclistas1',
+        onEachFeature: pop_Viasciclistas1,
+        style: style_Viasciclistas1
+    });
+        bounds_group.addLayer(layer_Viasciclistas1);
+        feature_group.addLayer(layer_Viasciclistas1);
+        function pop_Ciclocarriles2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">CAPA</th>\
+                        <td>' + (feature.properties['CAPA'] !== null ? Autolinker.link(String(feature.properties['CAPA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TX_NOMBRE</th>\
+                        <td>' + (feature.properties['TX_NOMBRE'] !== null ? Autolinker.link(String(feature.properties['TX_NOMBRE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MaxSimpTol</th>\
+                        <td>' + (feature.properties['MaxSimpTol'] !== null ? Autolinker.link(String(feature.properties['MaxSimpTol'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MinSimpTol</th>\
+                        <td>' + (feature.properties['MinSimpTol'] !== null ? Autolinker.link(String(feature.properties['MinSimpTol'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FECHA</th>\
+                        <td>' + (feature.properties['FECHA'] !== null ? Autolinker.link(String(feature.properties['FECHA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Longitud</th>\
+                        <td>' + (feature.properties['Longitud'] !== null ? Autolinker.link(String(feature.properties['Longitud'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_Ciclocarriles2() {
+            return {
+                pane: 'pane_Ciclocarriles2',
+                opacity: 1,
+                color: 'rgba(0,198,227,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+            }
+        }
+        map.createPane('pane_Ciclocarriles2');
+        map.getPane('pane_Ciclocarriles2').style.zIndex = 602;
+        map.getPane('pane_Ciclocarriles2').style['mix-blend-mode'] = 'normal';
+    var layer_Ciclocarriles2 = new L.geoJson(json_Ciclocarriles2, {
+        pane: 'pane_Ciclocarriles2',
+        onEachFeature: pop_Ciclocarriles2,
+        style: style_Ciclocarriles2
+    });
+        bounds_group.addLayer(layer_Ciclocarriles2);
+        feature_group.addLayer(layer_Ciclocarriles2);
+        function pop_Semaforobici3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">TIPO</th>\
+                        <td>' + (feature.properties['TIPO'] !== null ? Autolinker.link(String(feature.properties['TIPO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">COD</th>\
+                        <td>' + (feature.properties['COD'] !== null ? Autolinker.link(String(feature.properties['COD'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BDISTRITO</th>\
+                        <td>' + (feature.properties['BDISTRITO'] !== null ? Autolinker.link(String(feature.properties['BDISTRITO'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_Semaforobici3() {
+            return {
+                pane: 'pane_Semaforobici3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(149,147,3,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,255,1,1.0)',
+            }
+        }
+        map.createPane('pane_Semaforobici3');
+        map.getPane('pane_Semaforobici3').style.zIndex = 603;
+        map.getPane('pane_Semaforobici3').style['mix-blend-mode'] = 'normal';
+        var layer_Semaforobici3 = new L.geoJson(json_Semaforobici3, {
+            pane: 'pane_Semaforobici3',
+            onEachFeature: pop_Semaforobici3,
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, style_Semaforobici3(feature))
+            }
+        });
+        bounds_group.addLayer(layer_Semaforobici3);
+        feature_group.addLayer(layer_Semaforobici3);
+        function pop_Avanzabici4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ID</th>\
+                        <td>' + (feature.properties['ID'] !== null ? Autolinker.link(String(feature.properties['ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DIRECCION</th>\
+                        <td>' + (feature.properties['DIRECCION'] !== null ? Autolinker.link(String(feature.properties['DIRECCION'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FECHA</th>\
+                        <td>' + (feature.properties['FECHA'] !== null ? Autolinker.link(String(feature.properties['FECHA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FOTO</th>\
+                        <td>' + (feature.properties['FOTO'] !== null ? Autolinker.link(String(feature.properties['FOTO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TIPO</th>\
+                        <td>' + (feature.properties['TIPO'] !== null ? Autolinker.link(String(feature.properties['TIPO'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_Avanzabici4() {
+            return {
+                pane: 'pane_Avanzabici4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(119,52,181,1.0)',
+            }
+        }
+        map.createPane('pane_Avanzabici4');
+        map.getPane('pane_Avanzabici4').style.zIndex = 604;
+        map.getPane('pane_Avanzabici4').style['mix-blend-mode'] = 'normal';
+        var layer_Avanzabici4 = new L.geoJson(json_Avanzabici4, {
+            pane: 'pane_Avanzabici4',
+            onEachFeature: pop_Avanzabici4,
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, style_Avanzabici4(feature))
+            }
+        });
+        bounds_group.addLayer(layer_Avanzabici4);
+        feature_group.addLayer(layer_Avanzabici4);
+        function pop_Aparcabicis5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">LON</th>\
+                        <td>' + (feature.properties['LON'] !== null ? Autolinker.link(String(feature.properties['LON'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LAT</th>\
+                        <td>' + (feature.properties['LAT'] !== null ? Autolinker.link(String(feature.properties['LAT'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CODIGO</th>\
+                        <td>' + (feature.properties['CODIGO'] !== null ? Autolinker.link(String(feature.properties['CODIGO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CENTRO</th>\
+                        <td>' + (feature.properties['CENTRO'] !== null ? Autolinker.link(String(feature.properties['CENTRO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DIRECCION</th>\
+                        <td>' + (feature.properties['DIRECCION'] !== null ? Autolinker.link(String(feature.properties['DIRECCION'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DISTRITO</th>\
+                        <td>' + (feature.properties['DISTRITO'] !== null ? Autolinker.link(String(feature.properties['DISTRITO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ARCOS</th>\
+                        <td>' + (feature.properties['ARCOS'] !== null ? Autolinker.link(String(feature.properties['ARCOS'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CAPACIDAD</th>\
+                        <td>' + (feature.properties['CAPACIDAD'] !== null ? Autolinker.link(String(feature.properties['CAPACIDAD'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MODELO</th>\
+                        <td>' + (feature.properties['MODELO'] !== null ? Autolinker.link(String(feature.properties['MODELO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TITULAR</th>\
+                        <td>' + (feature.properties['TITULAR'] !== null ? Autolinker.link(String(feature.properties['TITULAR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ESTADO</th>\
+                        <td>' + (feature.properties['ESTADO'] !== null ? Autolinker.link(String(feature.properties['ESTADO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">OBSERVACIO</th>\
+                        <td>' + (feature.properties['OBSERVACIO'] !== null ? Autolinker.link(String(feature.properties['OBSERVACIO'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_Aparcabicis5() {
+            return {
+                pane: 'pane_Aparcabicis5',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(73,68,125,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(107,8,169,1.0)',
+            }
+        }
+        map.createPane('pane_Aparcabicis5');
+        map.getPane('pane_Aparcabicis5').style.zIndex = 605;
+        map.getPane('pane_Aparcabicis5').style['mix-blend-mode'] = 'normal';
+        var layer_Aparcabicis5 = new L.geoJson(json_Aparcabicis5, {
+            pane: 'pane_Aparcabicis5',
+            onEachFeature: pop_Aparcabicis5,
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, style_Aparcabicis5(feature))
+            }
+        });
+        bounds_group.addLayer(layer_Aparcabicis5);
+        feature_group.addLayer(layer_Aparcabicis5);
+        function pop_Areasdedescanso6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">OBJECTID</th>\
+                        <td>' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CODIGO</th>\
+                        <td>' + (feature.properties['CODIGO'] !== null ? Autolinker.link(String(feature.properties['CODIGO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KILOMETRO</th>\
+                        <td>' + (feature.properties['KILOMETRO'] !== null ? Autolinker.link(String(feature.properties['KILOMETRO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DISTRITO</th>\
+                        <td>' + (feature.properties['DISTRITO'] !== null ? Autolinker.link(String(feature.properties['DISTRITO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TX_DISTRIT</th>\
+                        <td>' + (feature.properties['TX_DISTRIT'] !== null ? Autolinker.link(String(feature.properties['TX_DISTRIT'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ARCOS</th>\
+                        <td>' + (feature.properties['ARCOS'] !== null ? Autolinker.link(String(feature.properties['ARCOS'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CAPACIDAD</th>\
+                        <td>' + (feature.properties['CAPACIDAD'] !== null ? Autolinker.link(String(feature.properties['CAPACIDAD'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FUENTE</th>\
+                        <td>' + (feature.properties['FUENTE'] !== null ? Autolinker.link(String(feature.properties['FUENTE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ESTADO</th>\
+                        <td>' + (feature.properties['ESTADO'] !== null ? Autolinker.link(String(feature.properties['ESTADO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">OBSERVACIO</th>\
+                        <td>' + (feature.properties['OBSERVACIO'] !== null ? Autolinker.link(String(feature.properties['OBSERVACIO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PLANO</th>\
+                        <td>' + (feature.properties['PLANO'] !== null ? Autolinker.link(String(feature.properties['PLANO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FOTO</th>\
+                        <td>' + (feature.properties['FOTO'] !== null ? Autolinker.link(String(feature.properties['FOTO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FECHA_FOTO</th>\
+                        <td>' + (feature.properties['FECHA_FOTO'] !== null ? Autolinker.link(String(feature.properties['FECHA_FOTO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FUENTE_FOT</th>\
+                        <td>' + (feature.properties['FUENTE_FOT'] !== null ? Autolinker.link(String(feature.properties['FUENTE_FOT'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_Areasdedescanso6() {
+            return {
+                pane: 'pane_Areasdedescanso6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,117,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,236,15,1.0)',
+            }
+        }
+        map.createPane('pane_Areasdedescanso6');
+        map.getPane('pane_Areasdedescanso6').style.zIndex = 606;
+        map.getPane('pane_Areasdedescanso6').style['mix-blend-mode'] = 'normal';
+        var layer_Areasdedescanso6 = new L.geoJson(json_Areasdedescanso6, {
+            pane: 'pane_Areasdedescanso6',
+            onEachFeature: pop_Areasdedescanso6,
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, style_Areasdedescanso6(feature))
+            }
+        });
+        bounds_group.addLayer(layer_Areasdedescanso6);
+        feature_group.addLayer(layer_Areasdedescanso6);
+        function pop_BasesBicimad7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NUM</th>\
+                        <td>' + (feature.properties['NUM'] !== null ? Autolinker.link(String(feature.properties['NUM'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GIS_ID</th>\
+                        <td>' + (feature.properties['GIS_ID'] !== null ? Autolinker.link(String(feature.properties['GIS_ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PLAI_ID</th>\
+                        <td>' + (feature.properties['PLAI_ID'] !== null ? Autolinker.link(String(feature.properties['PLAI_ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GIS_X</th>\
+                        <td>' + (feature.properties['GIS_X'] !== null ? Autolinker.link(String(feature.properties['GIS_X'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GIS_Y</th>\
+                        <td>' + (feature.properties['GIS_Y'] !== null ? Autolinker.link(String(feature.properties['GIS_Y'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ALTA</th>\
+                        <td>' + (feature.properties['ALTA'] !== null ? Autolinker.link(String(feature.properties['ALTA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DISTRITO</th>\
+                        <td>' + (feature.properties['DISTRITO'] !== null ? Autolinker.link(String(feature.properties['DISTRITO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BARRIO</th>\
+                        <td>' + (feature.properties['BARRIO'] !== null ? Autolinker.link(String(feature.properties['BARRIO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CALLE</th>\
+                        <td>' + (feature.properties['CALLE'] !== null ? Autolinker.link(String(feature.properties['CALLE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PORTAL</th>\
+                        <td>' + (feature.properties['PORTAL'] !== null ? Autolinker.link(String(feature.properties['PORTAL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PLAZAS</th>\
+                        <td>' + (feature.properties['PLAZAS'] !== null ? Autolinker.link(String(feature.properties['PLAZAS'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LON</th>\
+                        <td>' + (feature.properties['LON'] !== null ? Autolinker.link(String(feature.properties['LON'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LAT</th>\
+                        <td>' + (feature.properties['LAT'] !== null ? Autolinker.link(String(feature.properties['LAT'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_BasesBicimad7() {
+            return {
+                pane: 'pane_BasesBicimad7',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,1,1,1.0)',
+            }
+        }
+        map.createPane('pane_BasesBicimad7');
+        map.getPane('pane_BasesBicimad7').style.zIndex = 607;
+        map.getPane('pane_BasesBicimad7').style['mix-blend-mode'] = 'normal';
+        var layer_BasesBicimad7 = new L.geoJson(json_BasesBicimad7, {
+            pane: 'pane_BasesBicimad7',
+            onEachFeature: pop_BasesBicimad7,
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, style_BasesBicimad7(feature))
+            }
+        });
+        bounds_group.addLayer(layer_BasesBicimad7);
+        feature_group.addLayer(layer_BasesBicimad7);
+        raster_group.addTo(map);
+        feature_group.addTo(map);
+        var osmGeocoder = new L.Control.OSMGeocoder({
+            collapsed: false,
+            position: 'topright',
+            text: 'Search',
+        });
+        osmGeocoder.addTo(map);
+        var baseMaps = {'Thunderforest Outdoors': basemap0, 'Carto Dark_all': basemap1, 'Carto Light_all': basemap2};
+        L.control.layers(baseMaps,{'<img src="legend/BasesBicimad7.png" /> Bases Bicimad': layer_BasesBicimad7,'<img src="legend/Areasdedescanso6.png" /> Areas de descanso': layer_Areasdedescanso6,'<img src="legend/Aparcabicis5.png" /> Aparcabicis': layer_Aparcabicis5,'<img src="legend/Avanzabici4.png" /> Avanza bici': layer_Avanzabici4,'<img src="legend/Semaforobici3.png" /> Semaforo bici': layer_Semaforobici3,'<img src="legend/Ciclocarriles2.png" /> Ciclocarriles': layer_Ciclocarriles2,'Vias ciclistas<br /><table><tr><td style="text-align: center;"><img src="legend/Viasciclistas1_Viasciclistasexistentes0.png" /></td><td>Vias ciclistas existentes</td></tr><tr><td style="text-align: center;"><img src="legend/Viasciclistas1_Anilloverde1.png" /></td><td>Anillo verde</td></tr><tr><td style="text-align: center;"><img src="legend/Viasciclistas1_EncaminamientoPieatierra2.png" /></td><td>Encaminamiento- Pie a tierra</td></tr><tr><td style="text-align: center;"><img src="legend/Viasciclistas1_Circuitosdeocio3.png" /></td><td>Circuitos de ocio</td></tr><tr><td style="text-align: center;"><img src="legend/Viasciclistas1_Sinservicio4.png" /></td><td>Sin servicio</td></tr><tr><td style="text-align: center;"><img src="legend/Viasciclistas1_Viasplanificadas5.png" /></td><td>Vias planificadas</td></tr><tr><td style="text-align: center;"><img src="legend/Viasciclistas1_Viasfueradelmunicipo6.png" /></td><td>Vias fuera del municipo</td></tr></table>': layer_Viasciclistas1,'Calles tranquilas<br /><table><tr><td style="text-align: center;"><img src="legend/Callestranquilas0_Ciclocalles0.png" /></td><td>Ciclocalles</td></tr><tr><td style="text-align: center;"><img src="legend/Callestranquilas0_Peatonal1.png" /></td><td>Peatonal</td></tr></table>': layer_Callestranquilas0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
