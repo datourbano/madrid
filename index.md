@@ -15,6 +15,9 @@
   - #### **COMUNICACIONES**
     - **Wifi**
       1. [Instalaciones municipales con zonas wifi gratuitas](https://github.com/datourbano/madrid/blob/master/servicios/comunicaciones/wifi/28079_wifi_municipal.md)
+  - #### **RECARGA**
+    - **Vehículos**
+      1. [Puntos de Recarga de vehículos eléctricos de acceso público](https://github.com/datourbano/madrid/blob/master/servicios/recarga/vehiculos/28079_recarga_de_vehiculos_acceso_publico.md)
 
 
 <br />
