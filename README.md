@@ -1,4 +1,4 @@
-## DATO URBANO: Madrid (España)
+## DATO URBANO: Madrid
 ---
 
 Los datos de este repositorio proceden en su mayor parte del [Portal de datos abiertos del Ayuntamiento de Madrid](http://datos.madrid.es/), trabajos personales de toma de datos y digitalización de documentos públicos.
@@ -11,7 +11,6 @@ En la medida de lo posible, se ha tratado de respetar la estructura original de 
 OTRAS FUENTES DE INFORMACIÓN
 
 * 
-
 
 <br />
 ![](https://raw.githubusercontent.com/datourbano/simbologia/master/_/twitter_18.png "@datourb") [@datourb](http:twitter.com/datourb)  
