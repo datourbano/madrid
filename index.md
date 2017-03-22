@@ -1,4 +1,4 @@
-# DATO URBANO: Madrid (España)
+# DATO URBANO: Madrid
 * ### **MOVILIDAD**
   - #### **BICI**
     - **Servicios**
@@ -18,7 +18,6 @@
   - #### **RECARGA**
     - **Vehículos**
       1. [Puntos de Recarga de vehículos eléctricos de acceso público](https://github.com/datourbano/madrid/blob/master/servicios/recarga/vehiculos/28079_recarga_de_vehiculos_acceso_publico.md)
-
 
 <br />
 ![](https://raw.githubusercontent.com/datourbano/simbologia/master/_/twitter_18.png "@datourb") [@datourb](http:twitter.com/datourb)  
